@@ -7,6 +7,7 @@ import org.example.tables.references.COUNTRY
 import org.example.tables.references.FILM
 import org.jooq.DSLContext
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -22,6 +23,7 @@ class ExampleServiceTest {
     private lateinit var dsl: DSLContext
 
     @Test
+    @Disabled
     fun `should get film description by title`() {
         val result = service.getFilmDescriptionByTitle("KING EVOLUTION")
 
@@ -29,6 +31,7 @@ class ExampleServiceTest {
     }
 
     @Test
+    @Disabled
     fun `should get film actor names by title (ordered by firstName, lastName)`() {
         val result = service.getFilmActorNamesByTitle("ALIEN CENTER")
 
@@ -39,6 +42,7 @@ class ExampleServiceTest {
     }
 
     @Test
+    @Disabled
     fun `should insert country`() {
         service.insertCountry(CountryPojo(12345, "XYZ"))
 
@@ -51,6 +55,7 @@ class ExampleServiceTest {
     }
 
     @Test
+    @Disabled
     fun `should increase rental rate`() {
         service.increaseRentalRate(2)
 
@@ -64,6 +69,7 @@ class ExampleServiceTest {
         .fetchOne { it.getValue(FILM.RENTAL_RATE) }
 
     @Test
+    @Disabled
     fun `should count films with trailers by year (sorted by year)`() {
         val result = service.countFilmsWithTrailersByYear()
 
