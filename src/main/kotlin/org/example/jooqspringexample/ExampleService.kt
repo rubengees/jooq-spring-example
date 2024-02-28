@@ -45,7 +45,7 @@ class ExampleService(private val dsl: DSLContext) {
     fun countFilmsWithTrailersByYear(): List<YearCount> {
         return dsl.select(FILM.RELEASE_YEAR.asNonNullField(), count())
             .from(FILM)
-            .where(`val`("Trailers").`in`(FILM.SPECIAL_FEATURES))
+            .where(FILM.SPECIAL_FEATURES.contains(arrayOf("Trailers")))
             .groupBy(FILM.RELEASE_YEAR)
             .orderBy(FILM.RELEASE_YEAR)
             .fetch(mapping(::YearCount))
