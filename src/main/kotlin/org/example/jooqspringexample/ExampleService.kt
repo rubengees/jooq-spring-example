@@ -23,13 +23,15 @@ class ExampleService(private val dsl: DSLContext) {
     }
 
     fun getFilmActorNamesByTitle(title: String): List<String> {
-        return dsl.select(concat(ACTOR.FIRST_NAME, `val`(" "), ACTOR.LAST_NAME))
+        val fullName = concat(ACTOR.FIRST_NAME, `val`(" "), ACTOR.LAST_NAME).`as`("full_name")
+
+        return dsl.select(fullName)
             .from(FILM)
             .innerJoin(FILM_ACTOR).on(FILM.FILM_ID.eq(FILM_ACTOR.FILM_ID))
             .innerJoin(ACTOR).on(ACTOR.ACTOR_ID.eq(FILM_ACTOR.ACTOR_ID))
             .where(FILM.TITLE.eq(title))
             .orderBy(ACTOR.FIRST_NAME, ACTOR.LAST_NAME)
-            .fetch { it.value1() }
+            .fetch { it.getValue(fullName) }
     }
 
     fun insertCountry(country: CountryPojo) {
