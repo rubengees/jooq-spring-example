@@ -45,8 +45,7 @@ class ExampleServiceTest {
         val result = dsl.select(COUNTRY.COUNTRY_)
             .from(COUNTRY)
             .where(COUNTRY.COUNTRY_ID.eq(12345))
-            .fetchOne()
-            ?.value1()
+            .fetchOne { it.getValue(COUNTRY.COUNTRY_) }
 
         assertEquals("XYZ", result)
     }
@@ -55,12 +54,14 @@ class ExampleServiceTest {
     fun `should increase rental rate`() {
         service.increaseRentalRate(2)
 
-        val firstRentalRate = dsl.select(FILM.RENTAL_RATE).from(FILM).where(FILM.FILM_ID.eq(1)).fetchOne()
-        val secondRentalRate = dsl.select(FILM.RENTAL_RATE).from(FILM).where(FILM.FILM_ID.eq(2)).fetchOne()
-
-        assertEquals(2.99.toBigDecimal(), firstRentalRate?.value1())
-        assertEquals(6.99.toBigDecimal(), secondRentalRate?.value1())
+        assertEquals(2.99.toBigDecimal(), getRentalRate(1))
+        assertEquals(6.99.toBigDecimal(), getRentalRate(2))
     }
+
+    private fun getRentalRate(id: Int) = dsl.select(FILM.RENTAL_RATE)
+        .from(FILM)
+        .where(FILM.FILM_ID.eq(id))
+        .fetchOne { it.getValue(FILM.RENTAL_RATE) }
 
     @Test
     fun `should count films with trailers by year (sorted by year)`() {
@@ -68,25 +69,25 @@ class ExampleServiceTest {
 
         assertEquals(
             listOf(
-                YearCount(2006,30),
-                YearCount(2007,33),
-                YearCount(2008,23),
-                YearCount(2009,26),
-                YearCount(2010,24),
-                YearCount(2011,29),
-                YearCount(2012,26),
-                YearCount(2013,39),
-                YearCount(2014,19),
-                YearCount(2015,24),
-                YearCount(2016,21),
-                YearCount(2017,28),
-                YearCount(2018,28),
-                YearCount(2019,34),
-                YearCount(2020,29),
-                YearCount(2021,32),
-                YearCount(2022,35),
-                YearCount(2023,31),
-                YearCount(2024,24),
+                YearCount(2006, 30),
+                YearCount(2007, 33),
+                YearCount(2008, 23),
+                YearCount(2009, 26),
+                YearCount(2010, 24),
+                YearCount(2011, 29),
+                YearCount(2012, 26),
+                YearCount(2013, 39),
+                YearCount(2014, 19),
+                YearCount(2015, 24),
+                YearCount(2016, 21),
+                YearCount(2017, 28),
+                YearCount(2018, 28),
+                YearCount(2019, 34),
+                YearCount(2020, 29),
+                YearCount(2021, 32),
+                YearCount(2022, 35),
+                YearCount(2023, 31),
+                YearCount(2024, 24),
             ),
             result,
         )
