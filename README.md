@@ -11,3 +11,6 @@ the [Pagila](https://github.com/devrimgunduz/pagila) example database.
   - Run `docker compose up` in the root.
 - Run the tests. This will also generate the jOOQ classes.
 - Check `ExampleService` for the queries.
+
+The current branch `exercise` has `TODO`s and disabled tests. Enable the tests and try to write a query for it! For
+solutions check the `main` branch.
