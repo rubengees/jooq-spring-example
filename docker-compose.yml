@@ -1,17 +1,19 @@
-version: "3"
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:17-alpine
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
+    healthcheck:
+      test: "pg_isready -U postgres"
 
   flyway:
-    image: flyway/flyway:10-alpine
+    image: flyway/flyway:11-alpine
     command: -url=jdbc:postgresql://postgres:5432/postgres -schemas=public -user=postgres -password=postgres -cleanDisabled=false clean migrate
     volumes:
       - ./src/main/resources/db/migration:/flyway/sql/schema
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy

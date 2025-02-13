@@ -1,0 +1,24 @@
+[versions]
+spring-boot = "3.4.2"
+kotlin = "2.1.10"
+jooq = "3.19.18"
+flyway = "11.3.1"
+embedded-database-spring-test = "2.6.0"
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+jooq-codegen = { id = "org.jooq.jooq-codegen-gradle", version.ref = "jooq" }
+
+[libraries]
+spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+spring-boot-starter-jooq = { module = "org.springframework.boot:spring-boot-starter-jooq" }
+testcontainers-postgresql = { module = "org.testcontainers:postgresql" }
+flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
+flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
+jooq = { module = "org.jooq:jooq", version.ref = "jooq" }
+postgresql = { module = "org.postgresql:postgresql" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+embedded-database-spring-test = { module = "io.zonky.test:embedded-database-spring-test", version.ref = "embedded-database-spring-test" }
+
